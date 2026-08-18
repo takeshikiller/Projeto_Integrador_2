@@ -1,56 +1,38 @@
-# 💧 Sistema IoT de Monitoramento Inteligente de Água
+💧 Gestão Hídrica Inteligente para Escola Técnica
+Monitoramento em tempo real do pivô de irrigação, da piscicultura e do consumo de água da escola.
 
-> **Solução inteligente e em tempo real contra o desperdício, vazamentos e riscos de desabastecimento em reservatórios urbanos, comerciais e residenciais.**
+📌 O Problema
+🌾 Pivô de Irrigação: Risco de irrigar demais, gastando água e energia sem necessidade.
 
----
+🐟 Piscicultura: Variações na água (pH e temperatura) que podem matar os peixes.
 
-## 📌 Problema
+🏫 Uso Escolar: Vazamentos, transbordamento de caixas d'água e falta de água nos horários de pico.
 
-Comunidades, empresas e sistemas urbanos enfrentam perdas frequentes de água decorrentes de **vazamentos não detectados** e da **falta de visibilidade em tempo real** sobre:
-* 📉 Nível atual dos reservatórios
-* 🧪 Qualidade da água armazenada
-* ⚠️ Risco iminente de desabastecimento
+💡 A Solução
+Um painel único no computador ou celular que recebe dados de sensores espalhados pela escola:
 
-A ausência de dados precisos e contínuos dificulta a tomada de decisão preventiva, resultando em desperdício de recursos e prejuízos financeiros.
+No Pivô: Liga a irrigação automaticamente apenas quando o solo estiver seco.
 
----
+Na Piscicultura: Mede pH, temperatura e turbidez da água, enviando alertas antes de afetar os peixes.
 
-## 💡 Solução
+Na Escola: Controla o nível das caixas d'água e avisa se houver vazamentos.
 
-Uma **plataforma integrada de IoT** que utiliza sensores instalados nos reservatórios para realizar medições contínuas e automatizadas de **nível, vazão e parâmetros de qualidade** (pH, turbidez e temperatura). 
+🛠️ Tecnologias Principais
+Sensores + ESP32: Leitura do solo, água e caixas d'água transmitida sem fio.
 
-Os dados coletados são transmitidos via rede sem fio para um **painel administrativo centralizado**, que oferece:
-* 🔔 **Alertas Instantâneos:** Notificações automáticas em caso de anomalias (vazamentos, quedas bruscas de nível ou desvios de qualidade).
-* 📊 **Previsão de Autonomia:** Cálculo preditivo do tempo restante de abastecimento com base no padrão de consumo atual.
-* 📈 **Dashboard em Tempo Real:** Visualização clara através de gráficos e métricas fundamentais.
+Servidor (Node.js + MQTT): Recebe os dados e decide quando ligar as bombas ou mandar alertas.
 
----
+Painel Web (React): Tela simples para alunos, professores e equipe de manutenção acompanharem tudo.
 
-## 🛠️ Tecnologias Utilizadas
-
-A arquitetura do sistema foi projetada para garantir **alta precisão, baixa latência e escalabilidade**:
-
-| Camada | Tecnologias / Ferramentas | Descrição |
-| :--- | :--- | :--- |
-| **Hardware & IoT** | `ESP32` • `Sensores Ultrassônicos` • `Sensor de Fluxo` • `LoRaWAN / Wi-Fi` | Coleta de dados dos sensores de nível, vazão e parâmetros físico-químicos. |
-| **Firmware** | `C++` • `Arduino IDE` • `ESP-IDF` | Programação de baixo nível para leitura, tratamento local e transmissão de dados. |
-| **Mensageria IoT** | `MQTT` • `Eclipse Mosquitto` • `HiveMQ` | Protocolo leve e pub/sub para comunicação em tempo real entre dispositivos e servidor. |
-| **Backend** | `Node.js` • `TypeScript` | API RESTful e gerenciador do fluxo de dados e regras de negócio. |
-| **Banco de Dados** | `InfluxDB` | Banco de dados otimizado para séries temporais (*time-series*), ideal para leituras contínuas. |
-| **Frontend** | `React.js` • `Tailwind CSS` • `Chart.js` / `Recharts` | Interface web moderna, responsiva e interativa com visualização de gráficos e dashboards. |
-
----
-
-## 🏗️ Arquitetura do Sistema
-
-```txt
-┌────────────────┐      MQTT       ┌────────────────┐
-│ Sensores &     │ ──────────────> │ Broker MQTT    │
-│ ESP32          │                 │ (Mosquitto)    │
-└────────────────┘                 └───────┬────────┘
-                                           │
-                                           ▼
-┌────────────────┐   InfluxDB Query┌────────────────┐
-│ Dashboard Web  │ <────────────── │ Backend API    │
-│ (React + Chart)│                 │ (Node + TS)    │
-└────────────────┘                 └────────────────┘
+🏗️ Como Funciona (Fluxo Simplificado)
+Plaintext
+[ Sensores no Campo, Tanques e Caixas ]
+                 │
+                 ▼ (Envio Sem Fio)
+         [ Placa ESP32 ]
+                 │
+                 ▼ (Internet / Wi-Fi)
+    [ Servidor Central (Cérebro) ]
+       │                     │
+       ▼                     ▼
+[ Aciona Bombas / Relés ]  [ Envia Alertas no Painel Web ]
