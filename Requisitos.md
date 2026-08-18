@@ -1,27 +1,31 @@
-Requisitos Funcionais (O que o sistema deve fazer)
+Requisitos Funcionais (RF)
 
-RF01 - Coleta Contínua de Dados: O sistema deve ler periodicamente os dados dos sensores (nível do reservatório, vazão de saída e parâmetros de qualidade).
+RF01 (Piscicultura): Monitorar continuamente o pH, a temperatura e a turbidez da água dos tanques.
 
-RF02 - Transmissão de Leituras: O dispositivo IoT deve enviar as medições coletadas para o servidor via protocolo MQTT em intervalos configuráveis.
+RF02 (Piscicultura): Enviar alertas em tempo real se a qualidade da água colocar a vida dos peixes em risco.
 
-RF03 - Alertas de Anomalias: O sistema deve emitir notificações em tempo real (painel web e e-mail/SMS) quando detectar vazamentos ou níveis críticos de água.
+RF03 (Irrigação): Ler o nível de umidade do solo na área do pivô.
 
-RF04 - Visualização em Painel (Dashboard): A interface web deve exibir gráficos dinâmicos com o nível atual da água, histórico de consumo e indicadores de qualidade.
+RF04 (Irrigação): Ligar e desligar o pivô automaticamente com base na umidade do solo e no nível do reservatório.
 
-RF05 - Previsão de Autonomia: O sistema deve calcular e exibir uma estimativa do tempo restante até o esgotamento do reservatório com base no fluxo médio de consumo.
+RF05 (Uso Escolar): Monitorar em tempo real o nível das caixas d'água e o volume consumido pelos prédios da escola.
 
-RF06 - Gestão de Dispositivos e Reservatórios: O usuário administrador deve poder cadastrar, editar e remover reservatórios e seus respectivos módulos ESP32.
+RF06 (Uso Escolar): Detectar vazamentos ou consumos anormais em horários sem movimento (ex: durante a madrugada).
 
-Requisitos Não Funcionais (Atributos de qualidade e restrições)
+RF07 (Painel Web): Exibir os dados dos 3 setores em um único dashboard visual no celular ou computador.
 
-RNF01 - Baixa Latência: As leituras enviadas pelos sensores devem ser processadas e refletidas no painel de controle em menos de 3 segundos.
+RF08 (Histórico): Armazenar o histórico das medições em gráficos para análises, relatórios e uso nas aulas práticas.
 
-RNF02 - Eficiência Energética: O código do firmware no ESP32 deve utilizar modos de baixo consumo (deep sleep) entre as leituras para economizar bateria em locais sem rede elétrica direta.
+Requisitos Não Funcionais (RNF)
 
-RNF03 - Tolerância a Falhas Conectivas: Caso a conexão sem fio seja perdida, o microcontrolador deve armazenar localmente as leituras mais recentes e sincronizá-las assim que a rede for restabelecida.
+RNF01 (Conectividade): Transmitir dados a longa distância no campo usando Wi-Fi local ou protocolo LoRaWAN.
 
-RNF04 - Escalabilidade de Dados: O banco de dados de séries temporais (InfluxDB) deve suportar a gravação contínua de centenas de leituras por segundo sem perda de desempenho.
+RNF02 (Desempenho): Atualizar as informações dos sensores no painel em no máximo 5 segundos.
 
-RNF05 - Segurança de Comunicação: Toda a troca de mensagens via MQTT e chamadas de API web deve utilizar criptografia TLS/SSL e autenticação por tokens seguros.
+RNF03 (Disponibilidade): Manter o monitoramento rodando 24 horas por dia, 7 dias por semana sem interrupções.
 
-RNF06 - Responsividade da Interface: O painel web deve ser adaptável e funcional em telas de smartphones, tablets e computadores desktop.
+RNF04 (Usabilidade): Apresentar uma interface simples, direta e adaptada para telas de celulares e computadores.
+
+RNF05 (Proteção do Hardware): Utilizar cases impermeáveis (padrão IP65+) para os sensores e placas expostos ao sol e chuva.
+
+RNF06 (Escalabilidade): Permitir a inclusão de novos sensores no futuro sem precisar refazer o sistema.
