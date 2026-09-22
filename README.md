@@ -1,38 +1,27 @@
-💧 Gestão Hídrica Inteligente para Escola Técnica
-Monitoramento em tempo real do pivô de irrigação, da piscicultura e do consumo de água da escola.
+# Sistema de Achados e Perdidos
 
-📌 O Problema
-🌾 Pivô de Irrigação: Risco de irrigar demais, gastando água e energia sem necessidade.
+## O que é
+Um protótipo funcional em página web que digitaliza o processo de achados e perdidos da escola. Os alunos podem pesquisar online antes de irem até a secretaria.
 
-🐟 Piscicultura: Variações na água (pH e temperatura) que podem matar os peixes.
+---
 
-🏫 Uso Escolar: Vazamentos, transbordamento de caixas d'água e falta de água nos horários de pico.
+## Como funciona
 
-💡 A Solução
-Um painel único no computador ou celular que recebe dados de sensores espalhados pela escola:
+### 1. Cadastro (Secretaria / Funcionário)
+Quando um objeto é encontrado, o funcionário preenche uma ficha com:
+* Nome do objeto
+* Descrição
+* Local onde foi achado
+* Data
+* Onde pode ser retirado
+* Foto (opcional)
 
-No Pivô: Liga a irrigação automaticamente apenas quando o solo estiver seco.
+O registro fica salvo com o status **"aguardando retirada"**. Após a entrega, o funcionário pode alterar o status para **"devolvido"** (permitindo reabrir se necessário) ou **excluir** o registro.
 
-Na Piscicultura: Mede pH, temperatura e turbidez da água, enviando alertas antes de afetar os peixes.
+### 2. Busca (Aluno)
+O aluno acessa a página, digita uma palavra-chave (nome do objeto, local, etc.) e visualiza na hora as fichas correspondentes, com foto e detalhes para saber onde buscar o item.
 
-Na Escola: Controla o nível das caixas d'água e avisa se houver vazamentos.
+---
 
-🛠️ Tecnologias Principais
-Sensores + ESP32: Leitura do solo, água e caixas d'água transmitida sem fio.
-
-Servidor (Node.js + MQTT): Recebe os dados e decide quando ligar as bombas ou mandar alertas.
-
-Painel Web (React): Tela simples para alunos, professores e equipe de manutenção acompanharem tudo.
-
-🏗️ Como Funciona (Fluxo Simplificado)
-Plaintext
-[ Sensores no Campo, Tanques e Caixas ]
-                 │
-                 ▼ (Envio Sem Fio)
-         [ Placa ESP32 ]
-                 │
-                 ▼ (Internet / Wi-Fi)
-    [ Servidor Central (Cérebro) ]
-       │                     │
-       ▼                     ▼
-[ Aciona Bombas / Relés ]  [ Envia Alertas no Painel Web ]
+## Limitação importante do protótipo
+Os dados ficam salvos no armazenamento local (`localStorage`) do navegador de quem está usando a página. Isso funciona bem para testes e demonstrações, mas cada pessoa vê apenas os registros feitos no seu próprio dispositivo, sem uma lista compartilhada entre secretaria e alunos. Para uso coletivo real, o próximo passo seria conectá-lo a um banco de dados compartilhado.
