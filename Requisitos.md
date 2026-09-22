@@ -1,31 +1,24 @@
-Requisitos Funcionais (RF)
+## Requisitos funcionais (o que o sistema faz)
 
-RF01 (Piscicultura): Monitorar continuamente o pH, a temperatura e a turbidez da água dos tanques.
+## RF01 — Cadastrar um objeto encontrado, com nome, descrição, local onde foi achado, data e local de retirada
+## RF02 — Anexar uma foto do objeto ao cadastro (opcional)
+## RF03 — Salvar automaticamente cada objeto cadastrado
+## RF04 — Listar todos os objetos cadastrados
+## RF05 — Buscar objetos por palavra-chave (nome, descrição ou local)
+## RF06 — Filtrar objetos por status: aguardando retirada ou já devolvido
+## RF07 — Marcar um objeto como devolvido (ou reabrir, caso tenha sido marcado por engano)
+## RF08 — Excluir um registro, com confirmação antes de apagar
+## RF09 — Mostrar mensagem clara quando não houver objetos cadastrados ou quando a busca não encontrar resultados
+## RF10 — Exibir a contagem de itens exibidos em relação ao total cadastrado
 
-RF02 (Piscicultura): Enviar alertas em tempo real se a qualidade da água colocar a vida dos peixes em risco.
+## Requisitos não funcionais (como o sistema se comporta)
 
-RF03 (Irrigação): Ler o nível de umidade do solo na área do pivô.
-
-RF04 (Irrigação): Ligar e desligar o pivô automaticamente com base na umidade do solo e no nível do reservatório.
-
-RF05 (Uso Escolar): Monitorar em tempo real o nível das caixas d'água e o volume consumido pelos prédios da escola.
-
-RF06 (Uso Escolar): Detectar vazamentos ou consumos anormais em horários sem movimento (ex: durante a madrugada).
-
-RF07 (Painel Web): Exibir os dados dos 3 setores em um único dashboard visual no celular ou computador.
-
-RF08 (Histórico): Armazenar o histórico das medições em gráficos para análises, relatórios e uso nas aulas práticas.
-
-Requisitos Não Funcionais (RNF)
-
-RNF01 (Conectividade): Transmitir dados a longa distância no campo usando Wi-Fi local ou protocolo LoRaWAN.
-
-RNF02 (Desempenho): Atualizar as informações dos sensores no painel em no máximo 5 segundos.
-
-RNF03 (Disponibilidade): Manter o monitoramento rodando 24 horas por dia, 7 dias por semana sem interrupções.
-
-RNF04 (Usabilidade): Apresentar uma interface simples, direta e adaptada para telas de celulares e computadores.
-
-RNF05 (Proteção do Hardware): Utilizar cases impermeáveis (padrão IP65+) para os sensores e placas expostos ao sol e chuva.
-
-RNF06 (Escalabilidade): Permitir a inclusão de novos sensores no futuro sem precisar refazer o sistema.
+## RNF01 — Usabilidade: interface simples, sem necessidade de treinamento para secretaria ou alunos
+## RNF02 — Responsividade: funciona tanto em computador quanto em celular
+## RNF03 — Desempenho: busca e filtro respondem instantaneamente (processamento no próprio navegador, sem esperar servidor)
+## RNF04 — Portabilidade: roda direto no navegador, sem instalação
+## RNF05 — Compatibilidade: funciona nos navegadores modernos mais comuns (Chrome, Firefox, Edge, Safari)
+## RNF06 — Acessibilidade básica: contraste adequado de cores e indicação visível de foco ao navegar pelo teclado
+## RNF07 — Persistência: os dados cadastrados não se perdem ao fechar e reabrir a página, pois ficam salvos localmente
+## Limitação atual (importante registrar)
+## RNF08 — Os dados ficam salvos apenas no navegador de quem está usando a página — não há uma base compartilhada entre secretaria e alunos ainda. Isso é aceitável para um protótipo de demonstração, mas seria o primeiro ponto a evoluir para um sistema de uso real na escola (banco de dados compartilhado, como conversamos para o sistema de chamados de manutenção).
