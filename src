@@ -3,655 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Achados & Perdidos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<title>Portal CTBJ</title>
 <style>
-  :root {
-    --kraft: #E7DEC7;
-    --kraft-dark: #D8CBA9;
-    --card: #FBF8F0;
-    --card-edge: #E4DAC0;
-    --ink: #2B2A24;
-    --ink-soft: #6B6455;
-    --string: #A8420F;
-    --string-dark: #7C310A;
-    --stamp: #3F5C4E;
-    --stamp-bg: #E6EDE8;
-    --line: #C9BB98;
-    --danger: #9C3B2E;
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+:root{
+  --bg:#f4f6f8; --card:#ffffff; --text:#1a1f27; --muted:#5b6572;
+  --accent:#2563eb; --accent-dark:#1d4ed8; --border:#e2e6ea;
+  --warn:#f59e0b; --ok:#16a34a; --danger:#dc2626;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --card:#171c24; --text:#eef1f5; --muted:#9aa4b2;
+    --accent:#3b82f6; --accent-dark:#60a5fa; --border:#262d38;
   }
-  * { box-sizing: inherit; }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
-  html, body {
-    height: 100%;
-    margin: 0;
-    background: var(--kraft);
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.045) 1px, transparent 0);
-    background-size: 14px 14px;
-    color: var(--ink);
-    font-family: 'IBM Plex Sans', sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --kraft: #201C14;
-      --kraft-dark: #2A251A;
-      --card: #2C2820;
-      --card-edge: #3A3427;
-      --ink: #EDE6D3;
-      --ink-soft: #B3A98D;
-      --stamp-bg: #24322B;
-      --line: #4A4331;
-    }
-  }
-  :root[data-theme="dark"] {
-    --kraft: #201C14;
-    --kraft-dark: #2A251A;
-    --card: #2C2820;
-    --card-edge: #3A3427;
-    --ink: #EDE6D3;
-    --ink-soft: #B3A98D;
-    --stamp-bg: #24322B;
-    --line: #4A4331;
-  }
-
-  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 80px; }
-
-  header.masthead {
-    border-bottom: 3px solid var(--ink);
-    padding-bottom: 18px;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  header.masthead h1 {
-    font-family: 'Zilla Slab', serif;
-    font-weight: 700;
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    margin: 0;
-    letter-spacing: 0.2px;
-  }
-  header.masthead .tagline {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    max-width: 260px;
-    line-height: 1.5;
-    text-align: right;
-  }
-
-  .tabs {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--line);
-  }
-  .tab-btn {
-    font-family: 'Zilla Slab', serif;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 10px 18px 12px;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .tab-btn:hover { color: var(--ink); }
-  .tab-btn.active {
-    color: var(--ink);
-    border-bottom-color: var(--string);
-  }
-  .tab-btn:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 2px solid var(--string);
-    outline-offset: 2px;
-  }
-
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  .search-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-  }
-  .search-row input[type="search"] {
-    flex: 1 1 240px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.95rem;
-    padding: 12px 14px;
-    border: 1.5px solid var(--ink);
-    background: var(--card);
-    color: var(--ink);
-    border-radius: 2px;
-  }
-  .search-row select {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.9rem;
-    padding: 12px 10px;
-    border: 1.5px solid var(--ink);
-    background: var(--card);
-    color: var(--ink);
-    border-radius: 2px;
-  }
-
-  .empty-state {
-    border: 1.5px dashed var(--line);
-    padding: 40px 24px;
-    text-align: center;
-    color: var(--ink-soft);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.9rem;
-    border-radius: 2px;
-  }
-
-  .count-line {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    margin-bottom: 14px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 22px;
-  }
-
-  .tag-card {
-    position: relative;
-    background: var(--card);
-    border: 1px solid var(--card-edge);
-    border-radius: 3px;
-    padding: 16px 16px 14px;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
-  }
-  .tag-card::before {
-    content: "";
-    position: absolute;
-    top: -9px;
-    left: 20px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--kraft);
-    border: 1.5px solid var(--ink-soft);
-    box-shadow: 0 10px 0 -3px var(--string);
-  }
-  .tag-card .photo {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border: 1px solid var(--card-edge);
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: block;
-    background: var(--kraft-dark);
-  }
-  .tag-card .photo-placeholder {
-    width: 100%;
-    aspect-ratio: 4/3;
-    border: 1px dashed var(--line);
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    text-align: center;
-    padding: 8px;
-  }
-  .tag-card h3 {
-    font-family: 'Zilla Slab', serif;
-    font-size: 1.15rem;
-    margin: 0 0 6px;
-    line-height: 1.25;
-  }
-  .tag-card p.desc {
-    font-size: 0.88rem;
-    color: var(--ink);
-    margin: 0 0 10px;
-    line-height: 1.45;
-  }
-  .meta-line {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--ink-soft);
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    border-top: 1px solid var(--line);
-    padding-top: 8px;
-    margin-top: 8px;
-  }
-  .status-stamp {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    padding: 3px 8px;
-    border: 1.5px solid var(--stamp);
-    color: var(--stamp);
-    background: var(--stamp-bg);
-    border-radius: 2px;
-    transform: rotate(-2deg);
-    margin-bottom: 8px;
-  }
-  .status-stamp.devolvido {
-    border-color: var(--ink-soft);
-    color: var(--ink-soft);
-    background: transparent;
-  }
-  .card-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .card-actions button {
-    flex: 1;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.76rem;
-    padding: 7px 8px;
-    border-radius: 2px;
-    cursor: pointer;
-    border: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-  }
-  .card-actions button.primary {
-    background: var(--stamp);
-    border-color: var(--stamp);
-    color: #fff;
-  }
-  .card-actions button.danger {
-    border-color: var(--danger);
-    color: var(--danger);
-  }
-  .card-actions button:hover { opacity: 0.82; }
-
-  .form-card {
-    background: var(--card);
-    border: 1.5px solid var(--ink);
-    border-radius: 3px;
-    padding: 26px;
-    max-width: 560px;
-  }
-  .form-card h2 {
-    font-family: 'Zilla Slab', serif;
-    font-size: 1.3rem;
-    margin: 0 0 4px;
-  }
-  .form-card .sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--ink-soft);
-    margin: 0 0 22px;
-  }
-  .field { margin-bottom: 16px; }
-  .field label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-  .field .hint {
-    font-size: 0.72rem;
-    color: var(--ink-soft);
-    font-weight: 400;
-    margin-left: 6px;
-  }
-  .field input[type="text"],
-  .field input[type="date"],
-  .field select,
-  .field textarea {
-    width: 100%;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.92rem;
-    padding: 10px 11px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    background: #fff;
-    color: var(--ink);
-  }
-  :root[data-theme="dark"] .field input,
-  :root[data-theme="dark"] .field select,
-  :root[data-theme="dark"] .field textarea { background: var(--kraft-dark); }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .field input,
-    :root:not([data-theme="light"]) .field select,
-    :root:not([data-theme="light"]) .field textarea { background: var(--kraft-dark); }
-  }
-  .field textarea { resize: vertical; min-height: 70px; font-family: inherit; }
-
-  .photo-input-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .photo-input-row .preview {
-    width: 62px;
-    height: 62px;
-    border: 1px dashed var(--line);
-    border-radius: 2px;
-    object-fit: cover;
-    display: none;
-  }
-  .file-btn {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.8rem;
-    padding: 9px 14px;
-    border: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    border-radius: 2px;
-    cursor: pointer;
-  }
-  input[type="file"] { display: none; }
-
-  .submit-btn {
-    width: 100%;
-    font-family: 'Zilla Slab', serif;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 13px;
-    background: var(--string);
-    border: none;
-    color: #fff;
-    border-radius: 2px;
-    cursor: pointer;
-    margin-top: 6px;
-  }
-  .submit-btn:hover { background: var(--string-dark); }
-
-  .toast {
-    position: fixed;
-    left: 50%;
-    bottom: max(24px, env(safe-area-inset-bottom, 0px) + 24px);
-    transform: translateX(-50%) translateY(20px);
-    background: var(--ink);
-    color: var(--kraft);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    padding: 10px 18px;
-    border-radius: 3px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 20;
-  }
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  ::-webkit-scrollbar { height: 8px; width: 8px; }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --card:#171c24; --text:#eef1f5; --muted:#9aa4b2;
+  --accent:#3b82f6; --accent-dark:#60a5fa; --border:#262d38;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+*{box-sizing:border-box;}
+body{
+  margin:0; height:100%; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+header{
+  position:sticky; top:0; top:env(safe-area-inset-top,0px);
+  background:var(--accent); color:#fff; padding:16px 20px;
+  padding-top:calc(16px + env(safe-area-inset-top,0px));
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  z-index:10;
+}
+header h1{font-size:1.05rem; margin:0; font-weight:600;}
+header .sub{font-size:.75rem; opacity:.85;}
+nav{
+  display:flex; gap:4px; padding:8px 12px; background:var(--card);
+  border-bottom:1px solid var(--border); overflow-x:auto;
+}
+nav button{
+  border:none; background:transparent; color:var(--muted); padding:10px 14px;
+  border-radius:8px; font-size:.85rem; font-weight:600; cursor:pointer; white-space:nowrap;
+}
+nav button.active{background:var(--accent); color:#fff;}
+main{max-width:760px; margin:0 auto; padding:16px; padding-bottom:60px;}
+.view{display:none;}
+.view.active{display:block;}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:12px;
+  padding:16px; margin-bottom:14px;
+}
+.card h3{margin:0 0 4px; font-size:1rem;}
+.card .meta{font-size:.75rem; color:var(--muted); margin-bottom:8px;}
+.card p{margin:0; font-size:.9rem; line-height:1.4;}
+.tag{
+  display:inline-block; font-size:.7rem; font-weight:700; padding:2px 8px;
+  border-radius:999px; margin-right:6px; text-transform:uppercase;
+}
+.tag.urgente{background:#fee2e2; color:var(--danger);}
+.tag.aviso{background:#dbeafe; color:var(--accent-dark);}
+.tag.comissao{background:#fef3c7; color:#92400e;}
+form{display:flex; flex-direction:column; gap:10px;}
+label{font-size:.8rem; font-weight:600; color:var(--muted);}
+input, textarea, select{
+  width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg); color:var(--text); font-size:.9rem; font-family:inherit;
+}
+textarea{resize:vertical; min-height:60px;}
+button.primary{
+  background:var(--accent); color:#fff; border:none; padding:11px 16px;
+  border-radius:8px; font-weight:700; font-size:.9rem; cursor:pointer;
+}
+button.primary:active{background:var(--accent-dark);}
+button.small{
+  background:transparent; border:1px solid var(--border); color:var(--muted);
+  padding:6px 10px; border-radius:6px; font-size:.75rem; cursor:pointer;
+}
+.empty{color:var(--muted); font-size:.85rem; text-align:center; padding:30px 10px;}
+.badge-count{
+  background:#fff; color:var(--accent); border-radius:999px; font-size:.7rem;
+  padding:1px 7px; font-weight:800; margin-left:4px;
+}
+.row{display:flex; gap:10px;}
+.row > *{flex:1;}
+h2.section-title{font-size:.95rem; margin:4px 0 12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.03em;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="masthead">
-    <h1>Achados &amp; Perdidos</h1>
-    <div class="tagline">Registro de objetos encontrados na escola — consulte antes de ir até a secretaria.</div>
-  </header>
 
-  <nav class="tabs">
-    <button class="tab-btn active" data-tab="buscar">Buscar objetos</button>
-    <button class="tab-btn" data-tab="cadastrar">Cadastrar objeto encontrado</button>
-  </nav>
+<header>
+  <div>
+    <h1>Portal CTBJ</h1>
+    <div class="sub">Avisos · Reuniões · Comissões</div>
+  </div>
+  <div id="userBadge" class="sub"></div>
+</header>
 
-  <section class="panel active" id="panel-buscar">
-    <div class="search-row">
-      <input type="search" id="searchInput" placeholder="Buscar por objeto, local ou descrição..." aria-label="Buscar objetos">
-      <select id="statusFilter" aria-label="Filtrar por status">
-        <option value="todos">Todos os status</option>
-        <option value="disponivel">Aguardando retirada</option>
-        <option value="devolvido">Já devolvido</option>
-      </select>
-    </div>
-    <div class="count-line" id="countLine"></div>
-    <div id="gridArea"></div>
-  </section>
+<nav>
+  <button data-view="avisos" class="active">Avisos<span class="badge-count" id="countAvisos">0</span></button>
+  <button data-view="reunioes">Reuniões<span class="badge-count" id="countReunioes">0</span></button>
+  <button data-view="comissoes">Comissões<span class="badge-count" id="countComissoes">0</span></button>
+</nav>
 
-  <section class="panel" id="panel-cadastrar">
-    <div class="form-card">
-      <h2>Nova ficha de objeto encontrado</h2>
-      <p class="sub">Preencha os dados do item achado na escola.</p>
-      <form id="itemForm">
-        <div class="field">
-          <label for="f-nome">Nome do objeto</label>
-          <input type="text" id="f-nome" placeholder="Ex.: Garrafa de água azul" required>
-        </div>
-        <div class="field">
-          <label for="f-desc">Descrição <span class="hint">(cor, marca, características)</span></label>
-          <textarea id="f-desc" placeholder="Ex.: Garrafa térmica azul com adesivos, capacidade 500ml" required></textarea>
-        </div>
-        <div class="field">
-          <label for="f-local">Onde foi encontrado</label>
-          <input type="text" id="f-local" placeholder="Ex.: Quadra poliesportiva" required>
-        </div>
-        <div class="field">
-          <label for="f-data">Data em que foi encontrado</label>
-          <input type="date" id="f-data" required>
-        </div>
-        <div class="field">
-          <label for="f-retirada">Onde retirar</label>
-          <input type="text" id="f-retirada" placeholder="Ex.: Secretaria, sala 12" required>
-        </div>
-        <div class="field">
-          <label>Foto do objeto <span class="hint">(opcional)</span></label>
-          <div class="photo-input-row">
-            <button type="button" class="file-btn" id="photoTrigger">Escolher foto</button>
-            <input type="file" id="f-foto" accept="image/*">
-            <img class="preview" id="photoPreview" alt="Prévia da foto">
+<main>
+
+  <section id="view-avisos" class="view active">
+    <h2 class="section-title">Publicar aviso</h2>
+    <div class="card">
+      <form id="formAviso">
+        <label>Título</label>
+        <input type="text" id="avisoTitulo" required placeholder="Ex: Suspensão de aulas na sexta-feira">
+        <label>Mensagem</label>
+        <textarea id="avisoMsg" required placeholder="Detalhes do aviso..."></textarea>
+        <div class="row">
+          <div>
+            <label>Prioridade</label>
+            <select id="avisoPrioridade">
+              <option value="aviso">Normal</option>
+              <option value="urgente">Urgente</option>
+            </select>
+          </div>
+          <div>
+            <label>Destinado a</label>
+            <select id="avisoPublico">
+              <option value="Todos">Todos</option>
+              <option value="Professores">Professores</option>
+              <option value="Alunos">Alunos</option>
+              <option value="Responsáveis">Responsáveis</option>
+            </select>
           </div>
         </div>
-        <button type="submit" class="submit-btn">Registrar objeto</button>
+        <button type="submit" class="primary">Publicar aviso</button>
       </form>
     </div>
-  </section>
-</div>
 
-<div class="toast" id="toast"></div>
+    <h2 class="section-title">Avisos publicados</h2>
+    <div id="listaAvisos"></div>
+  </section>
+
+  <section id="view-reunioes" class="view">
+    <h2 class="section-title">Marcar reunião</h2>
+    <div class="card">
+      <form id="formReuniao">
+        <label>Assunto</label>
+        <input type="text" id="reuniaoAssunto" required placeholder="Ex: Conselho de classe - 2º ano">
+        <div class="row">
+          <div>
+            <label>Data</label>
+            <input type="date" id="reuniaoData" required>
+          </div>
+          <div>
+            <label>Horário</label>
+            <input type="time" id="reuniaoHora" required>
+          </div>
+        </div>
+        <label>Local</label>
+        <input type="text" id="reuniaoLocal" placeholder="Ex: Sala de reuniões / Google Meet">
+        <label>Participantes</label>
+        <input type="text" id="reuniaoParticipantes" placeholder="Ex: Coordenação, Professores do 2º ano">
+        <button type="submit" class="primary">Agendar reunião</button>
+      </form>
+    </div>
+
+    <h2 class="section-title">Reuniões agendadas</h2>
+    <div id="listaReunioes"></div>
+  </section>
+
+  <section id="view-comissoes" class="view">
+    <h2 class="section-title">Indicar professor para comissão</h2>
+    <div class="card">
+      <form id="formComissao">
+        <label>Nome do professor</label>
+        <input type="text" id="comissaoProfessor" required placeholder="Ex: Prof. João Silva">
+        <label>Comissão</label>
+        <input type="text" id="comissaoNome" required placeholder="Ex: Comissão de Formatura 2027">
+        <label>Observação (opcional)</label>
+        <textarea id="comissaoObs" placeholder="Motivo da indicação, prazo, etc."></textarea>
+        <button type="submit" class="primary">Enviar indicação</button>
+      </form>
+    </div>
+
+    <h2 class="section-title">Indicações enviadas</h2>
+    <div id="listaComissoes"></div>
+  </section>
+
+</main>
 
 <script>
-(function () {
-  const STORAGE_KEY = 'achados_perdidos_itens_v1';
-  const grid = document.getElementById('gridArea');
-  const countLine = document.getElementById('countLine');
-  const searchInput = document.getElementById('searchInput');
-  const statusFilter = document.getElementById('statusFilter');
-  const toast = document.getElementById('toast');
+const STORAGE_KEY = 'portal-escola-data-v1';
 
-  function loadItems() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      console.error('Erro ao ler dados salvos:', e);
-      return [];
-    }
-  }
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){ console.warn('Falha ao ler storage', e); }
+  return { avisos: [], reunioes: [], comissoes: [] };
+}
+function saveData(data){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  catch(e){ console.warn('Falha ao salvar storage', e); }
+}
 
-  function saveItems(items) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch (e) {
-      console.error('Erro ao salvar dados:', e);
-      showToast('Não foi possível salvar. Espaço de armazenamento pode estar cheio.');
-    }
-  }
+let data = loadData();
 
-  let items = loadItems();
+function fmtData(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtDataHora(ts){
+  const d = new Date(ts);
+  return d.toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+}
 
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2400);
-  }
-
-  function formatDate(iso) {
-    if (!iso) return '';
-    const [y, m, d] = iso.split('-');
-    return `${d}/${m}/${y}`;
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function render() {
-    const query = searchInput.value.trim().toLowerCase();
-    const statusVal = statusFilter.value;
-
-    let filtered = items.filter(it => {
-      const matchesQuery = !query ||
-        it.nome.toLowerCase().includes(query) ||
-        it.desc.toLowerCase().includes(query) ||
-        it.local.toLowerCase().includes(query);
-      const matchesStatus = statusVal === 'todos' || it.status === statusVal;
-      return matchesQuery && matchesStatus;
-    });
-
-    filtered.sort((a, b) => b.criadoEm - a.criadoEm);
-
-    countLine.textContent = items.length === 0
-      ? 'Nenhum objeto cadastrado ainda.'
-      : `${filtered.length} de ${items.length} objeto(s) exibido(s)`;
-
-    if (filtered.length === 0) {
-      grid.innerHTML = `<div class="empty-state">${items.length === 0
-        ? 'Nenhum objeto foi cadastrado ainda. Use a aba "Cadastrar objeto encontrado" para começar.'
-        : 'Nenhum objeto corresponde à busca.'}</div>`;
-      return;
-    }
-
-    grid.innerHTML = `<div class="grid">${filtered.map(it => cardHtml(it)).join('')}</div>`;
-
-    filtered.forEach(it => {
-      const toggleBtn = document.querySelector(`[data-toggle="${it.id}"]`);
-      const delBtn = document.querySelector(`[data-del="${it.id}"]`);
-      if (toggleBtn) toggleBtn.addEventListener('click', () => toggleStatus(it.id));
-      if (delBtn) delBtn.addEventListener('click', () => deleteItem(it.id));
-    });
-  }
-
-  function cardHtml(it) {
-    const photoBlock = it.foto
-      ? `<img class="photo" src="${it.foto}" alt="Foto de ${escapeHtml(it.nome)}">`
-      : `<div class="photo-placeholder">Sem foto cadastrada</div>`;
-
-    const stampClass = it.status === 'devolvido' ? 'status-stamp devolvido' : 'status-stamp';
-    const stampText = it.status === 'devolvido' ? 'DEVOLVIDO' : 'AGUARDANDO RETIRADA';
-
-    return `
-      <article class="tag-card">
-        ${photoBlock}
-        <span class="${stampClass}">${stampText}</span>
-        <h3>${escapeHtml(it.nome)}</h3>
-        <p class="desc">${escapeHtml(it.desc)}</p>
-        <div class="meta-line"><span>Encontrado em</span><span>${escapeHtml(it.local)}</span></div>
-        <div class="meta-line"><span>Data</span><span>${formatDate(it.data)}</span></div>
-        <div class="meta-line"><span>Retirar em</span><span>${escapeHtml(it.retirada)}</span></div>
-        <div class="card-actions">
-          <button type="button" class="primary" data-toggle="${it.id}">
-            ${it.status === 'devolvido' ? 'Reabrir' : 'Marcar devolvido'}
-          </button>
-          <button type="button" class="danger" data-del="${it.id}">Excluir</button>
-        </div>
-      </article>
-    `;
-  }
-
-  function toggleStatus(id) {
-    const it = items.find(x => x.id === id);
-    if (!it) return;
-    it.status = it.status === 'devolvido' ? 'disponivel' : 'devolvido';
-    saveItems(items);
-    render();
-    showToast(it.status === 'devolvido' ? 'Objeto marcado como devolvido.' : 'Objeto reaberto.');
-  }
-
-  function deleteItem(id) {
-    if (!confirm('Excluir este registro definitivamente?')) return;
-    items = items.filter(x => x.id !== id);
-    saveItems(items);
-    render();
-    showToast('Registro excluído.');
-  }
-
-  searchInput.addEventListener('input', render);
-  statusFilter.addEventListener('change', render);
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-    });
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
   });
+});
 
-  const photoTrigger = document.getElementById('photoTrigger');
-  const photoInput = document.getElementById('f-foto');
-  const photoPreview = document.getElementById('photoPreview');
-  let currentPhotoData = null;
-
-  photoTrigger.addEventListener('click', () => photoInput.click());
-  photoInput.addEventListener('change', () => {
-    const file = photoInput.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      currentPhotoData = e.target.result;
-      photoPreview.src = currentPhotoData;
-      photoPreview.style.display = 'block';
-    };
-    reader.onerror = () => showToast('Não foi possível carregar a imagem.');
-    reader.readAsDataURL(file);
+document.getElementById('formAviso').addEventListener('submit', e=>{
+  e.preventDefault();
+  data.avisos.unshift({
+    id: Date.now(),
+    titulo: document.getElementById('avisoTitulo').value,
+    mensagem: document.getElementById('avisoMsg').value,
+    prioridade: document.getElementById('avisoPrioridade').value,
+    publico: document.getElementById('avisoPublico').value,
+    data: Date.now()
   });
+  saveData(data);
+  e.target.reset();
+  renderAvisos();
+});
 
-  const form = document.getElementById('itemForm');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const novo = {
-      id: 'it_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
-      nome: document.getElementById('f-nome').value.trim(),
-      desc: document.getElementById('f-desc').value.trim(),
-      local: document.getElementById('f-local').value.trim(),
-      data: document.getElementById('f-data').value,
-      retirada: document.getElementById('f-retirada').value.trim(),
-      foto: currentPhotoData,
-      status: 'disponivel',
-      criadoEm: Date.now()
-    };
-    items.push(novo);
-    saveItems(items);
-    form.reset();
-    currentPhotoData = null;
-    photoPreview.style.display = 'none';
-    photoPreview.src = '';
-    showToast('Objeto registrado com sucesso.');
-    document.querySelector('[data-tab="buscar"]').click();
-    render();
+function renderAvisos(){
+  const list = document.getElementById('listaAvisos');
+  document.getElementById('countAvisos').textContent = data.avisos.length;
+  if(data.avisos.length===0){
+    list.innerHTML = '<div class="empty">Nenhum aviso publicado ainda.</div>';
+    return;
+  }
+  list.innerHTML = data.avisos.map(a=>`
+    <div class="card">
+      <span class="tag ${a.prioridade}">${a.prioridade==='urgente'?'Urgente':'Aviso'}</span>
+      <span class="tag" style="background:var(--bg); color:var(--muted);">${a.publico}</span>
+      <h3>${escapeHtml(a.titulo)}</h3>
+      <div class="meta">${fmtDataHora(a.data)}</div>
+      <p>${escapeHtml(a.mensagem)}</p>
+    </div>
+  `).join('');
+}
+
+document.getElementById('formReuniao').addEventListener('submit', e=>{
+  e.preventDefault();
+  data.reunioes.push({
+    id: Date.now(),
+    assunto: document.getElementById('reuniaoAssunto').value,
+    data: document.getElementById('reuniaoData').value,
+    hora: document.getElementById('reuniaoHora').value,
+    local: document.getElementById('reuniaoLocal').value,
+    participantes: document.getElementById('reuniaoParticipantes').value
   });
+  data.reunioes.sort((a,b)=> (a.data+a.hora).localeCompare(b.data+b.hora));
+  saveData(data);
+  e.target.reset();
+  renderReunioes();
+});
 
-  render();
-})();
+function renderReunioes(){
+  const list = document.getElementById('listaReunioes');
+  document.getElementById('countReunioes').textContent = data.reunioes.length;
+  if(data.reunioes.length===0){
+    list.innerHTML = '<div class="empty">Nenhuma reunião agendada ainda.</div>';
+    return;
+  }
+  list.innerHTML = data.reunioes.map(r=>`
+    <div class="card">
+      <h3>${escapeHtml(r.assunto)}</h3>
+      <div class="meta">${fmtData(r.data)} às ${r.hora}${r.local? ' · '+escapeHtml(r.local):''}</div>
+      ${r.participantes? `<p><strong>Participantes:</strong> ${escapeHtml(r.participantes)}</p>` : ''}
+    </div>
+  `).join('');
+}
+
+document.getElementById('formComissao').addEventListener('submit', e=>{
+  e.preventDefault();
+  data.comissoes.unshift({
+    id: Date.now(),
+    professor: document.getElementById('comissaoProfessor').value,
+    comissao: document.getElementById('comissaoNome').value,
+    obs: document.getElementById('comissaoObs').value,
+    data: Date.now()
+  });
+  saveData(data);
+  e.target.reset();
+  renderComissoes();
+});
+
+function renderComissoes(){
+  const list = document.getElementById('listaComissoes');
+  document.getElementById('countComissoes').textContent = data.comissoes.length;
+  if(data.comissoes.length===0){
+    list.innerHTML = '<div class="empty">Nenhuma indicação enviada ainda.</div>';
+    return;
+  }
+  list.innerHTML = data.comissoes.map(c=>`
+    <div class="card">
+      <span class="tag comissao">Indicação</span>
+      <h3>${escapeHtml(c.professor)} → ${escapeHtml(c.comissao)}</h3>
+      <div class="meta">${fmtDataHora(c.data)}</div>
+      ${c.obs? `<p>${escapeHtml(c.obs)}</p>` : ''}
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+renderAvisos();
+renderReunioes();
+renderComissoes();
 </script>
+
 </body>
 </html>
