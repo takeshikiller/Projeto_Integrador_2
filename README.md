@@ -1,6 +1,6 @@
 ## Resumo do Sistema
 
-## O Portal da Escola Técnica é um protótipo funcional de um site voltado para a comunicação interna de uma instituição de ensino técnico. Ele centraliza três funções principais que hoje costumam ficar espalhadas entre grupos de WhatsApp, e-mails e quadros de avisos físicos:
+## O Portal CTBJ é um protótipo funcional de um site voltado para a comunicação interna de uma instituição de ensino técnico. Ele centraliza três funções principais que hoje costumam ficar espalhadas entre grupos de WhatsApp, e-mails e quadros de avisos físicos:
 
 ## Avisos institucionais — permite à escola publicar comunicados (ex: suspensão de aulas, eventos, mudanças de horário), definindo a prioridade (normal ou urgente) e para quem se destina (todos, professores, alunos ou responsáveis). Os avisos ficam listados em ordem cronológica, com os mais recentes no topo.
 ## Agendamento de reuniões — permite marcar reuniões (conselhos de classe, reuniões pedagógicas, etc.) informando assunto, data, horário, local e participantes. As reuniões ficam organizadas por ordem de data, facilitando visualizar a agenda da escola.
